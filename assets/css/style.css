@@ -1,0 +1,207 @@
+﻿/* ===== Base ===== */
+@font-face{
+  font-family:"HelveticaNeueMedium";
+  src:url("../fonts/HelveticaNeueMedium.otf") format("opentype");
+  font-display:swap;
+}
+
+@font-face{
+  font-family:"HelveticaNeueLight";
+  src:url("../fonts/HelveticaNeueLight.otf") format("opentype");
+  font-display:swap;
+}
+
+:root{
+  --title:#EC6D69;
+  --text:#000000;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+/* Body uses Light for readable paragraphs */
+body{
+  margin:0;
+  color:var(--text);
+  font-family:"HelveticaNeueLight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:300;
+  background:#ffffff;
+}
+
+/* ===== Header (shared across all pages) ===== */
+.site-header{
+  padding:32px 20px 18px;
+}
+
+.site-title{
+  display:block;
+  text-decoration:none;
+  color:var(--title);
+  font-size:48px;
+  line-height:1.05;
+  letter-spacing:0.5px;
+  text-align:center;
+  font-family:"HelveticaNeueMedium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:500;
+}
+
+/* Nav: left-aligned links, but nav block centered */
+.site-nav-wrap{
+  margin-top:14px;
+  text-align:center;
+}
+
+.site-nav{
+  display:inline-flex;   /* center as a block */
+  flex-direction:row;    /* horizontal by default */
+  gap:24px;              /* space between links */
+}
+
+.site-nav a{
+  display:block;
+  text-decoration:none;
+  color:var(--text);
+  font-size:18px;
+  line-height:1.9;
+  font-family:"HelveticaNeueMedium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:500;
+}
+
+.site-nav a:hover{
+  text-decoration:underline;
+}
+
+/* ===== Page content ===== */
+.page{
+  padding:0 20px 60px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.section-title{
+  font-size:18px;
+  margin:30px 0 10px;
+  font-family:"HelveticaNeueMedium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:500;
+}
+
+.muted{
+  opacity:0.65;
+  font-size:14px;
+}
+
+/* ===== Home layout (center title+nav in viewport) ===== */
+body.home .site-header{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:24px 20px;
+  text-align:center;
+}
+
+body.home .site-title{
+  text-align:center;
+}
+
+body.home .page{
+  display:none; /* home has no below-content by default */
+}
+
+body.home .site-nav{
+  flex-direction:column; /* vertical only on home */
+  gap:0;                 /* matches your current stacked spacing */
+}
+
+/* ===== Simple content blocks ===== */
+.card{
+  margin:18px 0;
+  padding:16px 0;
+  border-top:1px solid rgba(0,0,0,0.10);
+}
+
+.card:first-of-type{
+  border-top:0;
+  padding-top:0;
+}
+
+.card h3{
+  margin:0 0 8px;
+  font-size:18px;
+  font-family:"HelveticaNeueMedium", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:500;
+}
+
+.card .meta{
+  font-size:13px;
+  opacity:0.7;
+  margin:0 0 10px;
+}
+
+.card p{
+  margin:0 0 10px;
+  line-height:1.6;
+}
+
+/* Embeds should fit */
+.embed{
+  width:100%;
+  max-width:100%;
+}
+.embed iframe{
+  width:100%;
+  max-width:100%;
+  border:0;
+}
+
+/* Active nav link underline (non-home pages) */
+body.videos .site-nav a[href="videos.html"],
+body.music  .site-nav a[href="music.html"],
+body.art     .site-nav a[href="art.html"],
+body.blog   .site-nav a[href="blog.html"]{
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ===== Self-hosted audio tiles ONLY ===== */
+.self-hosted-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:18px;
+  margin-top:16px;
+}
+
+.self-hosted-grid > .card{
+  padding:16px 0;
+  border-top:1px solid rgba(0,0,0,0.10);
+}
+
+.self-hosted-grid audio{
+  width:100%;
+  display:block;
+}
+
+
+
+
+/* ===== Art tiles ===== */
+.art-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px;
+  margin-top:16px;
+}
+
+.art-tile{
+  display:block;
+  border-top:1px solid rgba(0,0,0,0.10);
+  padding-top:14px;
+  text-decoration:none;
+}
+
+.art-tile img{
+  width:100%;
+  height:auto;
+  display:block;
+}
