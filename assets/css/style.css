@@ -52,9 +52,11 @@ body{
 }
 
 .site-nav{
-  display:inline-flex;   /* center as a block */
-  flex-direction:row;    /* horizontal by default */
-  gap:24px;              /* space between links */
+  display:flex;            /* was inline-flex */
+  flex-direction:row;      /* keep horizontal */
+  flex-wrap:wrap;          /* allow wrapping on mobile */
+  justify-content:center;  /* keep the whole bar centered */
+  gap:14px 18px;           /* row gap, column gap */
 }
 
 .site-nav a{
@@ -111,6 +113,7 @@ body.home .page{
 
 body.home .site-nav{
   flex-direction:column; /* vertical only on home */
+  flex-wrap:nowrap;      /* prevent wrapping weirdness */
   gap:0;                 /* matches your current stacked spacing */
 }
 
