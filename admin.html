@@ -819,8 +819,8 @@
        TAB SWITCHING
     ══════════════════════════════════════════════════════════════ */
     window.switchTab = function (tab) {
-      document.getElementById('blogPanel').style.display  = tab === 'blog'  ? '' : 'none';
-      document.getElementById('musicPanel').style.display = tab === 'music' ? '' : 'none';
+      document.getElementById('blogPanel').style.display  = tab === 'blog'  ? 'block' : 'none';
+      document.getElementById('musicPanel').style.display = tab === 'music' ? 'block' : 'none';
       document.getElementById('tabBlog').classList.toggle('active',  tab === 'blog');
       document.getElementById('tabMusic').classList.toggle('active', tab === 'music');
     };
