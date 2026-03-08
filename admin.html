@@ -1,0 +1,1607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>epsilver admin</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      min-height: 100vh;
+      color: #000;
+      font-family: "HelveticaNeueLight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* ===== Admin header ===== */
+    .admin-header {
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 28px 20px 20px;
+      text-align: center;
+    }
+
+    .admin-header .brand {
+      display: block;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 42px;
+      color: #EC6D69;
+      line-height: 1;
+    }
+
+    .admin-label {
+      margin-top: 4px;
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      opacity: 0.35;
+    }
+
+    /* ===== Setup bar ===== */
+    .setup-bar {
+      display: none;
+      max-width: 720px;
+      margin: 20px auto 0;
+      background: #fff8f0;
+      border: 1px solid rgba(236,109,105,0.35);
+      padding: 12px 18px;
+      font-size: 13px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .setup-bar.visible { display: flex; }
+
+    .btn-setup {
+      background: transparent;
+      border: 1px solid #EC6D69;
+      color: #EC6D69;
+      padding: 6px 16px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-setup:hover { background: rgba(236,109,105,0.06); }
+
+    /* ===== Tab bar ===== */
+    .tab-bar {
+      max-width: 720px;
+      margin: 28px auto 0;
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      padding: 9px 22px 10px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      color: #000;
+      opacity: 0.4;
+      transition: opacity 0.12s;
+    }
+
+    .tab-btn:hover { opacity: 0.75; }
+
+    .tab-btn.active {
+      opacity: 1;
+      border-bottom-color: #EC6D69;
+    }
+
+    /* ===== Editor card ===== */
+    .editor-wrap {
+      max-width: 720px;
+      margin: 0 auto 80px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.09);
+      border-top: none;
+      padding: 36px 56px 44px;
+    }
+
+    /* ===== Top bar: load post + new post ===== */
+    .editor-top-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .load-select {
+      flex: 1;
+      border: 1px solid rgba(0,0,0,0.16);
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 13px;
+      padding: 7px 10px;
+      color: #000;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(0,0,0,0.3)'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    .btn-new {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.18);
+      color: #000;
+      padding: 7px 16px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      opacity: 0.6;
+    }
+
+    .btn-new:hover { opacity: 1; }
+
+    /* ===== Editing badge ===== */
+    .editing-badge {
+      display: none;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: #EC6D69;
+      margin-bottom: 10px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+    }
+
+    .editing-badge.visible { display: block; }
+
+    /* ===== Title ===== */
+    .editor-title {
+      display: block;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 30px;
+      font-weight: 500;
+      color: #000;
+      padding: 0;
+      margin: 0 0 10px;
+      line-height: 1.2;
+    }
+
+    .editor-title::placeholder { opacity: 0.25; }
+
+    /* ===== Subtitle ===== */
+    .editor-subtitle {
+      display: block;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 15px;
+      font-style: italic;
+      color: #000;
+      opacity: 0.65;
+      padding: 0;
+      margin: 0 0 18px;
+    }
+
+    .editor-subtitle::placeholder { opacity: 0.35; }
+
+    /* ===== Meta row ===== */
+    .editor-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      opacity: 0.6;
+      flex-wrap: wrap;
+    }
+
+    .editor-date {
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,0.22);
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 13px;
+      padding: 2px 4px;
+      width: 90px;
+      text-align: center;
+      color: #000;
+    }
+
+    /* ===== Categories ===== */
+    .cats-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      opacity: 0.4;
+      margin-bottom: 10px;
+    }
+
+    .cats-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .cat-chip {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      padding: 4px 11px;
+      border: 1px solid rgba(0,0,0,0.16);
+      cursor: pointer;
+      user-select: none;
+      font-family: "HelveticaNeueLight", sans-serif;
+      transition: border-color 0.12s, color 0.12s;
+    }
+
+    .cat-chip input[type="checkbox"] { display: none; }
+
+    .cat-chip.selected {
+      border-color: #EC6D69;
+      color: #EC6D69;
+      font-family: "HelveticaNeueMedium", sans-serif;
+    }
+
+    /* ===== Add tag row ===== */
+    .add-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .new-tag-input {
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 12px;
+      padding: 3px 4px;
+      width: 140px;
+      color: #000;
+    }
+
+    .new-tag-input::placeholder { opacity: 0.35; }
+
+    .btn-add-tag {
+      background: transparent;
+      border: none;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 11px;
+      color: #EC6D69;
+      cursor: pointer;
+      padding: 0;
+      letter-spacing: 0.3px;
+      opacity: 0.7;
+    }
+
+    .btn-add-tag:hover { opacity: 1; }
+
+    /* ===== Divider ===== */
+    .editor-divider {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.09);
+      margin: 0 0 28px;
+    }
+
+    /* ===== Content area ===== */
+    .editor-content {
+      min-height: 420px;
+      outline: none;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #000;
+      caret-color: #EC6D69;
+    }
+
+    .editor-content p { margin: 0 0 14px; }
+    .editor-content em { font-style: italic; }
+    .editor-content strong { font-family: "HelveticaNeueMedium", sans-serif; font-weight: 500; }
+    .editor-content u { text-decoration: underline; }
+    .editor-content a { color: #EC6D69; }
+    .editor-content h2, .editor-content h3, .editor-content h4 {
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-weight: 500;
+      margin: 24px 0 10px;
+    }
+
+    .editor-content:empty::before {
+      content: 'Paste your Word Online content here (Ctrl+V) or start typing…';
+      color: rgba(0,0,0,0.25);
+      pointer-events: none;
+      display: block;
+    }
+
+    /* ===== Bottom publish bar ===== */
+    .editor-bottom {
+      border-top: 1px solid rgba(0,0,0,0.08);
+      margin-top: 44px;
+      padding-top: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .slug-label {
+      font-size: 12px;
+      opacity: 0.4;
+      white-space: nowrap;
+    }
+
+    .slug-input {
+      flex: 1;
+      min-width: 180px;
+      border: 1px solid rgba(0,0,0,0.16);
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", monospace;
+      font-size: 13px;
+      padding: 8px 12px;
+      color: #000;
+    }
+
+    .slug-input::placeholder { opacity: 0.35; }
+    .slug-input[readonly] { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-create {
+      background: #EC6D69;
+      color: #fff;
+      border: none;
+      padding: 10px 30px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.12s;
+    }
+
+    .btn-create:hover { opacity: 0.85; }
+    .btn-create:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .status-msg {
+      width: 100%;
+      font-size: 12px;
+      opacity: 0.45;
+      min-height: 16px;
+    }
+
+    .status-msg.ok  { opacity: 1; color: #2d8a4e; }
+    .status-msg.err { opacity: 1; color: #c0392b; }
+
+    /* ===== Floating toolbar ===== */
+    .toolbar {
+      position: fixed;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.13);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.10);
+      display: none;
+      z-index: 999;
+    }
+
+    .toolbar.visible { display: flex; }
+
+    .toolbar button {
+      border: none;
+      background: transparent;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      border-right: 1px solid rgba(0,0,0,0.09);
+      color: #000;
+      line-height: 1;
+    }
+
+    .toolbar button:last-child { border-right: none; }
+    .toolbar button:hover { background: #f5f5f5; }
+    .toolbar button em { font-style: italic; }
+    .toolbar button u  { text-decoration: underline; }
+
+    /* ===== Music panel ===== */
+    .music-panel { display: none; }
+    .music-panel.active { display: block; }
+
+    .music-section {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .music-section:last-of-type { border-bottom: none; }
+
+    .music-field-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      opacity: 0.4;
+      margin-bottom: 8px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+    }
+
+    .music-embed-input {
+      width: 100%;
+      border: 1px solid rgba(0,0,0,0.14);
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", monospace;
+      font-size: 12px;
+      padding: 8px 10px;
+      color: #000;
+      word-break: break-all;
+    }
+
+    .music-embed-input::placeholder { opacity: 0.3; }
+
+    .featured-display {
+      font-size: 14px;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: #fafafa;
+      color: #000;
+      opacity: 0.7;
+    }
+
+    /* ===== Track list ===== */
+    .track-list {
+      list-style: none;
+      margin: 0 0 12px;
+      padding: 0;
+    }
+
+    .track-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      cursor: default;
+    }
+
+    .track-item.dragging { opacity: 0.4; }
+    .track-item.drag-over { border-top: 2px solid #EC6D69; }
+
+    .track-drag-handle {
+      cursor: grab;
+      opacity: 0.25;
+      font-size: 14px;
+      padding: 0 4px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .track-drag-handle:active { cursor: grabbing; }
+
+    .track-title-input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid transparent;
+      outline: none;
+      background: transparent;
+      font-family: "HelveticaNeueLight", sans-serif;
+      font-size: 13px;
+      color: #000;
+      padding: 2px 0;
+    }
+
+    .track-title-input:focus { border-bottom-color: rgba(0,0,0,0.18); }
+
+    .btn-pin {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0 4px;
+      opacity: 0.25;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .btn-pin:hover { opacity: 0.7; }
+    .btn-pin.pinned { opacity: 1; color: #EC6D69; }
+
+    .btn-remove-track {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 4px;
+      opacity: 0.2;
+      flex-shrink: 0;
+      line-height: 1;
+      color: #000;
+    }
+
+    .btn-remove-track:hover { opacity: 0.6; }
+
+    .track-src-label {
+      font-size: 11px;
+      opacity: 0.35;
+      font-family: "HelveticaNeueLight", monospace;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .music-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-music-action {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.18);
+      color: #000;
+      padding: 7px 16px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+
+    .btn-music-action:hover { opacity: 1; }
+
+    .btn-save-music {
+      background: #EC6D69;
+      color: #fff;
+      border: none;
+      padding: 10px 30px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      transition: opacity 0.12s;
+    }
+
+    .btn-save-music:hover { opacity: 0.85; }
+    .btn-save-music:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    @media (max-width: 780px) {
+      .editor-wrap { padding: 28px 20px 32px; margin: 0 12px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating formatting toolbar -->
+  <div class="toolbar" id="toolbar">
+    <button onmousedown="fmt(event,'bold')"><strong>B</strong></button>
+    <button onmousedown="fmt(event,'italic')"><em>I</em></button>
+    <button onmousedown="fmt(event,'underline')"><u>U</u></button>
+    <button onmousedown="fmtLink(event)">Link</button>
+  </div>
+
+  <!-- Header -->
+  <div class="admin-header">
+    <span class="brand">epsilver</span>
+    <div class="admin-label">admin</div>
+  </div>
+
+  <!-- One-time folder setup -->
+  <div class="setup-bar" id="setupBar">
+    <span>Select your project root folder once to enable publishing.</span>
+    <button class="btn-setup" onclick="setup()">Select folder →</button>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tabBlog" onclick="switchTab('blog')">Blog</button>
+    <button class="tab-btn" id="tabMusic" onclick="switchTab('music')">Music</button>
+  </div>
+
+  <!-- Editor wrap (shared card for both tabs) -->
+  <div class="editor-wrap">
+
+    <!-- ══════════════════════════════════════════════════════════════
+         BLOG PANEL
+    ══════════════════════════════════════════════════════════════ -->
+    <div id="blogPanel">
+
+      <!-- Load / New post bar -->
+      <div class="editor-top-bar">
+        <select class="load-select" id="loadSelect" onchange="onLoadSelect(this.value)">
+          <option value="">— Load existing post to edit —</option>
+          <option value="__new__">New Article</option>
+        </select>
+      </div>
+
+      <!-- Editing indicator -->
+      <div class="editing-badge" id="editingBadge">Editing post</div>
+
+      <input class="editor-title"    id="title"    type="text" placeholder="Title"              autocomplete="off" />
+      <input class="editor-subtitle" id="subtitle" type="text" placeholder="Subtitle (optional)" autocomplete="off" />
+
+      <div class="editor-meta-row">
+        <span>Date:</span>
+        <input class="editor-date" id="date" type="text" placeholder="2026" maxlength="10" autocomplete="off" />
+        <span style="opacity:0.35; font-size:12px">leave blank for Undated</span>
+      </div>
+
+      <div class="cats-label">Categories</div>
+      <div class="cats-wrap" id="catsWrap"></div>
+
+      <div class="add-tag-row">
+        <input class="new-tag-input" id="newTagInput" type="text" placeholder="Add new tag…" autocomplete="off"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();addTag();}" />
+        <button class="btn-add-tag" onclick="addTag()">+ Add</button>
+      </div>
+
+      <hr class="editor-divider" />
+
+      <div class="editor-content" id="content" contenteditable="true" spellcheck="true"></div>
+
+      <div class="editor-bottom">
+        <span class="slug-label">posts/</span>
+        <input class="slug-input" id="slug" type="text" placeholder="post-slug-here" autocomplete="off" />
+        <span class="slug-label">.html</span>
+        <button class="btn-create" id="createBtn" onclick="publish()">Create</button>
+        <div class="status-msg" id="statusMsg">Ready.</div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MUSIC PANEL
+    ══════════════════════════════════════════════════════════════ -->
+    <div id="musicPanel" class="music-panel">
+
+      <!-- Spotify -->
+      <div class="music-section">
+        <div class="music-field-label">Spotify embed src</div>
+        <input class="music-embed-input" id="spotifySrc" type="text"
+               placeholder="https://open.spotify.com/embed/track/…" autocomplete="off" />
+      </div>
+
+      <!-- SoundCloud -->
+      <div class="music-section">
+        <div class="music-field-label">SoundCloud embed src</div>
+        <input class="music-embed-input" id="soundcloudSrc" type="text"
+               placeholder="https://w.soundcloud.com/player/?url=…" autocomplete="off" />
+      </div>
+
+      <!-- Featured track -->
+      <div class="music-section">
+        <div class="music-field-label">Featured song <span style="opacity:0.5;font-size:10px;text-transform:none;letter-spacing:0">(pin a track below)</span></div>
+        <div class="featured-display" id="featuredDisplay">none pinned</div>
+      </div>
+
+      <!-- Track list -->
+      <div class="music-section">
+        <div class="music-field-label">Self-hosted tracks</div>
+
+        <div class="music-actions">
+          <button class="btn-music-action" onclick="sortTracksAZ()">Sort A–Z</button>
+          <button class="btn-music-action" onclick="uploadTrack()">Upload mp3…</button>
+        </div>
+
+        <ul class="track-list" id="trackList"></ul>
+
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;border-top:1px solid rgba(0,0,0,0.07)">
+          <button class="btn-save-music" id="saveMusicBtn" onclick="saveMusic()">Save Music</button>
+          <div class="status-msg" id="musicStatusMsg">Load music.html to start.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+  (function () {
+
+    /* ══════════════════════════════════════════════════════════════
+       SHARED: IndexedDB + folder handle
+    ══════════════════════════════════════════════════════════════ */
+    function openDB() {
+      return new Promise((res, rej) => {
+        const r = indexedDB.open('epsilver-admin', 1);
+        r.onupgradeneeded = e => e.target.result.createObjectStore('h');
+        r.onsuccess  = e => res(e.target.result);
+        r.onerror    = ()  => rej(r.error);
+      });
+    }
+
+    async function saveHandle(handle) {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const tx = db.transaction('h', 'readwrite');
+        tx.objectStore('h').put(handle, 'root');
+        tx.oncomplete = res;
+        tx.onerror    = () => rej(tx.error);
+      });
+    }
+
+    async function loadHandle() {
+      const db = await openDB();
+      return new Promise((res, rej) => {
+        const tx  = db.transaction('h', 'readonly');
+        const req = tx.objectStore('h').get('root');
+        req.onsuccess = () => res(req.result || null);
+        req.onerror   = () => rej(req.error);
+      });
+    }
+
+    let rootHandle = null;
+
+    async function init() {
+      try {
+        const h = await loadHandle();
+        if (!h) { showFirstTimeSetup(); return; }
+
+        const quick = await h.queryPermission({ mode: 'readwrite' });
+        if (quick === 'granted') {
+          rootHandle = h;
+          setStatus('Ready.');
+          await loadPostList();
+          await loadMusicPage();
+          return;
+        }
+
+        showReconnect(h);
+      } catch (_) { showFirstTimeSetup(); }
+    }
+
+    function showReconnect(h) {
+      const bar = document.getElementById('setupBar');
+      bar.querySelector('span').textContent = 'Click to reconnect to your project folder.';
+      const btn = bar.querySelector('button');
+      btn.textContent = 'Reconnect →';
+      btn.onclick = async () => {
+        try {
+          const perm = await h.requestPermission({ mode: 'readwrite' });
+          if (perm === 'granted') {
+            rootHandle = h;
+            bar.classList.remove('visible');
+            setStatus('Ready.');
+            await loadPostList();
+            await loadMusicPage();
+          } else { showFirstTimeSetup(); }
+        } catch (_) { showFirstTimeSetup(); }
+      };
+      bar.classList.add('visible');
+      setStatus('Click Reconnect to start.', 'err');
+    }
+
+    function showFirstTimeSetup() {
+      const bar = document.getElementById('setupBar');
+      bar.querySelector('span').textContent = 'Select your project root folder once to enable publishing.';
+      const btn = bar.querySelector('button');
+      btn.textContent = 'Select folder →';
+      btn.onclick = setup;
+      bar.classList.add('visible');
+      setStatus('Select your project folder to enable publishing.', 'err');
+    }
+
+    async function setup() {
+      try {
+        const h = await window.showDirectoryPicker({ mode: 'readwrite' });
+        await h.getFileHandle('blog.html');
+        await saveHandle(h);
+        rootHandle = h;
+        document.getElementById('setupBar').classList.remove('visible');
+        setStatus('Folder saved. Ready.');
+        await loadPostList();
+        await loadMusicPage();
+      } catch (_) {
+        setStatus('Setup cancelled or wrong folder.', 'err');
+      }
+    }
+
+    window.setup = setup;
+
+    /* ══════════════════════════════════════════════════════════════
+       TAB SWITCHING
+    ══════════════════════════════════════════════════════════════ */
+    window.switchTab = function (tab) {
+      document.getElementById('blogPanel').style.display  = tab === 'blog'  ? '' : 'none';
+      document.getElementById('musicPanel').style.display = tab === 'music' ? '' : 'none';
+      document.getElementById('tabBlog').classList.toggle('active',  tab === 'blog');
+      document.getElementById('tabMusic').classList.toggle('active', tab === 'music');
+    };
+
+    /* ══════════════════════════════════════════════════════════════
+       BLOG TAB
+    ══════════════════════════════════════════════════════════════ */
+
+    /* ── Built-in categories ─────────────────────────────────── */
+    const CATS = [
+      { slug: 'comedy',                 label: 'Comedy' },
+      { slug: 'essay',                  label: 'Essay' },
+      { slug: 'human-experience',       label: 'Human Experience' },
+      { slug: 'humor',                  label: 'Humor' },
+      { slug: 'longmont-potion-castle', label: 'Longmont Potion Castle' },
+      { slug: 'music',                  label: 'Music' },
+      { slug: 'niche',                  label: 'Niche' },
+      { slug: 'punk',                   label: 'Punk' },
+    ];
+
+    const BUILTIN_SLUGS = new Set(CATS.map(c => c.slug));
+    const CUSTOM_CATS_KEY = 'epsilver-custom-cats';
+
+    /* ── Category chips ─────────────────────────────────────── */
+    const catsWrap = document.getElementById('catsWrap');
+
+    function addTagChip(slug, label) {
+      const lbl = document.createElement('label');
+      lbl.className = 'cat-chip';
+      lbl.dataset.slug = slug;
+      lbl.innerHTML = `<input type="checkbox" value="${slug}" />${label}`;
+      lbl.querySelector('input').addEventListener('change', function () {
+        lbl.classList.toggle('selected', this.checked);
+      });
+      catsWrap.appendChild(lbl);
+    }
+
+    CATS.forEach(({ slug, label }) => addTagChip(slug, label));
+
+    function loadCustomCats() {
+      try { return JSON.parse(localStorage.getItem(CUSTOM_CATS_KEY) || '[]'); }
+      catch { return []; }
+    }
+
+    function saveCustomCats(list) {
+      localStorage.setItem(CUSTOM_CATS_KEY, JSON.stringify(list));
+    }
+
+    loadCustomCats().forEach(({ slug, label }) => {
+      CATS.push({ slug, label });
+      addTagChip(slug, label);
+    });
+
+    window.addTag = function () {
+      const input = document.getElementById('newTagInput');
+      const label = input.value.trim();
+      if (!label) return;
+
+      const slug = label.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
+
+      if (document.querySelector(`.cat-chip[data-slug="${slug}"]`)) {
+        setStatus('Tag already exists.', 'err'); return;
+      }
+
+      CATS.push({ slug, label });
+      const custom = loadCustomCats();
+      custom.push({ slug, label });
+      saveCustomCats(custom);
+      addTagChip(slug, label);
+
+      input.value = '';
+      setStatus(`Tag "${label}" added.`);
+    };
+
+    function selectedCats() {
+      return Array.from(document.querySelectorAll('.cat-chip input:checked')).map(i => i.value);
+    }
+
+    /* ── Load post list into dropdown ───────────────────────── */
+    async function loadPostList() {
+      if (!rootHandle) return;
+      try {
+        const blogFH   = await rootHandle.getFileHandle('blog.html');
+        const blogText = await (await blogFH.getFile()).text();
+        const doc      = new DOMParser().parseFromString(blogText, 'text/html');
+        const articles = doc.querySelectorAll('.blog-main article.card');
+
+        const sel = document.getElementById('loadSelect');
+        sel.innerHTML = '<option value="">— Load existing post to edit —</option><option value="__new__">New Article</option>';
+
+        articles.forEach(art => {
+          const link    = art.querySelector('.read-more');
+          const titleEl = art.querySelector('h3');
+          if (!link || !titleEl) return;
+          const href = link.getAttribute('href') || '';
+          const slug = href.replace('posts/', '').replace('.html', '');
+          const opt  = document.createElement('option');
+          opt.value  = slug;
+          opt.textContent = titleEl.textContent.trim();
+          sel.appendChild(opt);
+        });
+      } catch (e) { console.warn('loadPostList:', e); }
+    }
+
+    /* ── Load a post into the editor ────────────────────────── */
+    let editingSlug = null;
+
+    window.onLoadSelect = async function (slug) {
+      if (!slug) return;
+      if (slug === '__new__') { resetForm(); setStatus('Ready.'); return; }
+      if (!rootHandle) { setStatus('Select your project folder first.', 'err'); return; }
+
+      setStatus('Loading…');
+      try {
+        const blogFH   = await rootHandle.getFileHandle('blog.html');
+        const blogText = await (await blogFH.getFile()).text();
+        const blogDoc  = new DOMParser().parseFromString(blogText, 'text/html');
+
+        let articleEl = null;
+        blogDoc.querySelectorAll('.blog-main article.card').forEach(art => {
+          const link = art.querySelector('.read-more');
+          if (link && link.getAttribute('href') === `posts/${slug}.html`) articleEl = art;
+        });
+
+        if (!articleEl) throw new Error('Article not found in blog.html');
+
+        const dateVal  = articleEl.dataset.date || 'undated';
+        const catSlugs = (articleEl.dataset.category || '').split(' ').filter(Boolean);
+        const titleEl  = articleEl.querySelector('h3');
+        const subEl    = articleEl.querySelector('.post-subtitle');
+
+        const postsDir = await rootHandle.getDirectoryHandle('posts');
+        const postFH   = await postsDir.getFileHandle(`${slug}.html`);
+        const postText = await (await postFH.getFile()).text();
+        const postDoc  = new DOMParser().parseFromString(postText, 'text/html');
+
+        const postArt = postDoc.querySelector('article.card');
+        if (!postArt) throw new Error('Article element not found in post file');
+
+        ['.post-back', 'h3', '.post-subtitle', '.meta'].forEach(sel => {
+          const el = postArt.querySelector(sel);
+          if (el) el.remove();
+        });
+
+        document.getElementById('title').value    = titleEl ? titleEl.textContent.trim() : '';
+        document.getElementById('subtitle').value = subEl   ? subEl.textContent.trim()   : '';
+        document.getElementById('date').value     = dateVal === 'undated' ? '' : dateVal;
+        document.getElementById('content').innerHTML = postArt.innerHTML.trim();
+
+        const slugInput = document.getElementById('slug');
+        slugInput.value    = slug;
+        slugInput.readOnly = true;
+
+        document.querySelectorAll('.cat-chip').forEach(chip => {
+          const checked = catSlugs.includes(chip.dataset.slug);
+          chip.querySelector('input').checked = checked;
+          chip.classList.toggle('selected', checked);
+        });
+
+        editingSlug = slug;
+        document.getElementById('createBtn').textContent = 'Update';
+        document.getElementById('editingBadge').classList.add('visible');
+        setStatus(`Editing: ${titleEl ? titleEl.textContent.trim() : slug}`);
+
+      } catch (e) {
+        setStatus('Error loading post: ' + e.message, 'err');
+        console.error(e);
+      }
+    };
+
+    function resetForm() {
+      document.getElementById('title').value    = '';
+      document.getElementById('subtitle').value = '';
+      document.getElementById('date').value     = '';
+      document.getElementById('content').innerHTML = '';
+
+      const slugInput = document.getElementById('slug');
+      slugInput.value    = '';
+      slugInput.readOnly = false;
+
+      document.querySelectorAll('.cat-chip').forEach(c => {
+        c.classList.remove('selected');
+        c.querySelector('input').checked = false;
+      });
+
+      editingSlug = null;
+      document.getElementById('createBtn').textContent = 'Create';
+      document.getElementById('editingBadge').classList.remove('visible');
+      document.getElementById('loadSelect').value = '';
+    }
+
+    /* ── Word HTML cleaner ──────────────────────────────────── */
+    function cleanWordHtml(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('style, script, meta, link, xml').forEach(el => el.remove());
+
+      const KEEP  = new Set(['p','em','strong','b','i','u','a','ul','ol','li','blockquote','br','h2','h3','h4']);
+      const REMAP = { b: 'strong', i: 'em' };
+
+      function walk(node) {
+        if (node.nodeType === 3) return node.cloneNode();
+
+        const tag    = (node.tagName || '').toLowerCase();
+        const mapped = REMAP[tag] || tag;
+
+        const frag = document.createDocumentFragment();
+        node.childNodes.forEach(c => { const n = walk(c); if (n) frag.appendChild(n); });
+
+        if (!KEEP.has(mapped)) {
+          const style = (node.getAttribute && node.getAttribute('style')) || '';
+          let out = frag;
+          if (/text-decoration[^;]*underline/i.test(style)) {
+            const u = document.createElement('u'); u.appendChild(out); out = u;
+          }
+          if (/font-style\s*:\s*italic/i.test(style)) {
+            const em = document.createElement('em'); em.appendChild(out); out = em;
+          }
+          if (/font-weight\s*:\s*(bold|[6-9]\d{2})/i.test(style)) {
+            const s = document.createElement('strong'); s.appendChild(out); out = s;
+          }
+          return out;
+        }
+
+        const el = document.createElement(mapped);
+
+        if (mapped === 'a') {
+          const href = node.getAttribute('href');
+          if (href && !href.startsWith('about:') && !href.startsWith('javascript:')) {
+            el.href = href; el.target = '_blank'; el.rel = 'noopener';
+          }
+        }
+
+        el.appendChild(frag);
+        if (['p','li','blockquote','h2','h3','h4'].includes(mapped) && !el.textContent.trim()) return null;
+        return el;
+      }
+
+      const out = document.createElement('div');
+      doc.body.childNodes.forEach(c => { const n = walk(c); if (n) out.appendChild(n); });
+      return out.innerHTML;
+    }
+
+    /* ── Paste handler ──────────────────────────────────────── */
+    document.getElementById('content').addEventListener('paste', function (e) {
+      e.preventDefault();
+      const html = e.clipboardData.getData('text/html');
+      if (html) {
+        document.execCommand('insertHTML', false, cleanWordHtml(html));
+      } else {
+        const text  = e.clipboardData.getData('text/plain');
+        const paras = text.split(/\n{2,}/)
+          .map(p => `<p>${p.trim().replace(/\n/g, ' ')}</p>`).join('');
+        document.execCommand('insertHTML', false, paras);
+      }
+    });
+
+    /* ── Floating toolbar ───────────────────────────────────── */
+    const toolbar = document.getElementById('toolbar');
+
+    document.addEventListener('selectionchange', () => {
+      const sel     = window.getSelection();
+      const content = document.getElementById('content');
+      if (!sel || sel.isCollapsed || !sel.toString().trim() || !content.contains(sel.anchorNode)) {
+        toolbar.classList.remove('visible'); return;
+      }
+      const rect = sel.getRangeAt(0).getBoundingClientRect();
+      toolbar.style.top  = Math.max(4, rect.top - 42) + 'px';
+      toolbar.style.left = Math.max(4, Math.min(rect.left + rect.width / 2 - 60, window.innerWidth - 140)) + 'px';
+      toolbar.classList.add('visible');
+    });
+
+    document.addEventListener('click', e => {
+      if (!toolbar.contains(e.target)) toolbar.classList.remove('visible');
+    });
+
+    window.fmt = function (e, cmd) { e.preventDefault(); document.execCommand(cmd); };
+
+    window.fmtLink = function (e) {
+      e.preventDefault();
+      const url = prompt('URL:');
+      if (!url) return;
+      document.execCommand('createLink', false, url);
+      const sel = window.getSelection();
+      if (sel && sel.anchorNode) {
+        let el = sel.anchorNode.parentElement;
+        while (el && el.tagName !== 'A') el = el.parentElement;
+        if (el) { el.target = '_blank'; el.rel = 'noopener'; }
+      }
+    };
+
+    /* ── Auto-slug from title (new posts only) ──────────────── */
+    document.getElementById('title').addEventListener('input', function () {
+      if (editingSlug) return;
+      document.getElementById('slug').value = this.value
+        .toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
+    });
+
+    /* ── HTML generators ────────────────────────────────────── */
+    function catLabel(slug) {
+      return (CATS.find(c => c.slug === slug) || {}).label || slug;
+    }
+
+    function buildMeta(cats, dateVal) {
+      const catStr  = cats.map(catLabel).join(', ');
+      const dateStr = dateVal === 'undated' ? 'Undated' : dateVal;
+      return [catStr, dateStr].filter(Boolean).join(' · ');
+    }
+
+    function articleBlock(title, subtitle, dateVal, cats, slug, contentHtml) {
+      const tmp   = document.createElement('div');
+      tmp.innerHTML = contentHtml;
+      const paras = Array.from(tmp.querySelectorAll('p')).slice(0, 2)
+                         .map(p => '        ' + p.outerHTML).join('\n');
+      const meta  = buildMeta(cats, dateVal);
+
+      let h = `      <article class="card" data-date="${dateVal}" data-category="${cats.join(' ')}">\n`;
+      h    += `        <h3>${esc(title)}</h3>\n`;
+      if (subtitle) h += `        <p class="post-subtitle">${esc(subtitle)}</p>\n`;
+      h    += `        <div class="meta">${meta}</div>\n\n`;
+      h    += paras + '\n\n';
+      h    += `        <a class="read-more" href="posts/${slug}.html">read more \u2192</a>\n`;
+      h    += `      </article>`;
+      return h;
+    }
+
+    function postPage(title, subtitle, dateVal, cats, contentHtml) {
+      const meta = buildMeta(cats, dateVal);
+      const tmp  = document.createElement('div');
+      tmp.innerHTML = contentHtml;
+      const body = Array.from(tmp.children).map(el => '      ' + el.outerHTML).join('\n\n');
+
+      return `<!doctype html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="shortcut icon" href="../favicon.ico">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>epsilver \u2014 ${esc(title)}</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body class="post">
+  <header class="site-header">
+    <a class="site-title" href="../index.html">epsilver</a>
+
+    <div class="site-nav-wrap">
+      <nav class="site-nav">
+        <a href="../music.html">music</a>
+        <a href="../blog.html">blog</a>
+        <a href="../art.html">art</a>
+        <a href="https://www.tiktok.com/@epsilver" target="_blank" rel="noopener">tiktok</a>
+        <a href="https://open.spotify.com/artist/732Bt8NRkphmqJ8o5NLfJY" target="_blank" rel="noopener">spotify</a>
+        <a href="https://www.youtube.com/@epsilverart" target="_blank" rel="noopener">youtube</a>
+        <a href="https://substack.com/@epsilver" target="_blank" rel="noopener">substack</a>
+        <a href="https://soundcloud.com/explodingplasticsilver" target="_blank" rel="noopener">soundcloud</a>
+        <a href="https://xhslink.com/m/GTGOY3fsh3" target="_blank" rel="noopener">xiaohongshu</a>
+        <a href="mailto:alexis@epsilver.xyz">alexis@epsilver.xyz</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <a class="post-back" href="../blog.html">\u2190 blog</a>
+
+    <article class="card">
+      <h3>${esc(title)}</h3>
+${subtitle ? `      <p class="post-subtitle">${esc(subtitle)}</p>\n` : ''}\
+      <div class="meta">${meta}</div>
+
+${body}
+    </article>
+  </main>
+
+  <a class="subsidiary" href="https://verticalrectangle.com" target="_blank" rel="noopener">Subsidiary of Vertical Rectangle</a>
+</body>
+</html>`;
+    }
+
+    function esc(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ── Update labelNames in blog.html for new tags ────────── */
+    function injectLabelNames(blogText, cats) {
+      const custom = cats.filter(s => !BUILTIN_SLUGS.has(s))
+                         .map(s => CATS.find(c => c.slug === s))
+                         .filter(Boolean);
+      if (!custom.length) return blogText;
+
+      return blogText.replace(
+        /(var labelNames = \{)([\s\S]*?)(\s*\};)/,
+        (_, open, content, close) => {
+          const additions = custom
+            .filter(({ slug }) => !content.includes(`'${slug}'`))
+            .map(({ slug, label }) => `\n        '${slug}': '${label}',`)
+            .join('');
+          return open + content + additions + close;
+        }
+      );
+    }
+
+    /* ── Publish (create or update) ─────────────────────────── */
+    window.publish = async function () {
+      if (!rootHandle) { setStatus('Select your project folder first.', 'err'); return; }
+
+      const title    = document.getElementById('title').value.trim();
+      const subtitle = document.getElementById('subtitle').value.trim();
+      const dateRaw  = document.getElementById('date').value.trim();
+      const slug     = document.getElementById('slug').value.trim();
+      const cats     = selectedCats();
+      const content  = document.getElementById('content').innerHTML.trim();
+      const dateVal  = dateRaw || 'undated';
+
+      if (!title)                         { setStatus('Title is required.', 'err');   return; }
+      if (!slug)                          { setStatus('Slug is required.', 'err');    return; }
+      if (!content || content === '<br>') { setStatus('Content is empty.', 'err');   return; }
+
+      const btn = document.getElementById('createBtn');
+      btn.disabled = true;
+      setStatus(editingSlug ? 'Updating…' : 'Publishing…');
+
+      try {
+        const blogFH   = await rootHandle.getFileHandle('blog.html');
+        const blogText = await (await blogFH.getFile()).text();
+        const article  = articleBlock(title, subtitle, dateVal, cats, slug, content);
+        const postHtml = postPage(title, subtitle, dateVal, cats, content);
+
+        let updatedBlog;
+
+        if (editingSlug) {
+          const safeSlug = editingSlug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const rx = new RegExp(
+            `[ \\t]*<article[^>]*>[\\s\\S]*?href="posts/${safeSlug}\\.html"[\\s\\S]*?</article>`
+          );
+          if (!rx.test(blogText)) throw new Error('Could not find original article in blog.html');
+          updatedBlog = blogText.replace(rx, article);
+
+        } else {
+          const MARKER = '<!-- ADD NEW BLOG POSTS BELOW THIS LINE -->';
+          if (!blogText.includes(MARKER)) throw new Error('Insertion marker not found in blog.html');
+          updatedBlog = blogText.replace(MARKER, MARKER + '\n\n' + article + '\n');
+        }
+
+        updatedBlog = injectLabelNames(updatedBlog, cats);
+
+        const blogW = await blogFH.createWritable();
+        await blogW.write(updatedBlog);
+        await blogW.close();
+
+        const postsDir = await rootHandle.getDirectoryHandle('posts', { create: true });
+        const postFH   = await postsDir.getFileHandle(`${slug}.html`, { create: true });
+        const postW    = await postFH.createWritable();
+        await postW.write(postHtml);
+        await postW.close();
+
+        const verb = editingSlug ? 'Updated' : 'Published';
+        setStatus(`\u2713 ${verb} — posts/${slug}.html saved. git push when ready.`, 'ok');
+
+        await loadPostList();
+        resetForm();
+
+      } catch (e) {
+        setStatus('Error: ' + e.message, 'err');
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    /* ── Status helper ──────────────────────────────────────── */
+    function setStatus(msg, type) {
+      const el = document.getElementById('statusMsg');
+      el.textContent = msg;
+      el.className   = 'status-msg ' + (type || '');
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       MUSIC TAB
+    ══════════════════════════════════════════════════════════════ */
+
+    let musicTracks      = [];  // [{ title, src, featured }]
+    let musicHtmlCache   = '';  // raw text of music.html for non-grid sections
+
+    /* ── Load music.html ────────────────────────────────────── */
+    async function loadMusicPage() {
+      if (!rootHandle) return;
+      try {
+        const fh   = await rootHandle.getFileHandle('music.html');
+        const text = await (await fh.getFile()).text();
+        musicHtmlCache = text;
+
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+
+        /* Spotify src */
+        const spotifyIframe = doc.querySelector('section.card iframe[src*="spotify"]');
+        if (spotifyIframe) document.getElementById('spotifySrc').value = spotifyIframe.getAttribute('src') || '';
+
+        /* SoundCloud src */
+        const scIframe = doc.querySelector('section.card iframe[src*="soundcloud"]');
+        if (scIframe) document.getElementById('soundcloudSrc').value = scIframe.getAttribute('src') || '';
+
+        /* Featured track */
+        const featTitle = doc.getElementById('featured-title');
+        const featAudio = doc.getElementById('featured-audio');
+        let featuredSrc = '';
+        if (featAudio) {
+          const src = featAudio.querySelector('source');
+          featuredSrc = src ? src.getAttribute('src') : (featAudio.getAttribute('src') || '');
+        }
+
+        /* Grid tracks */
+        musicTracks = [];
+        doc.querySelectorAll('.self-hosted-grid .card').forEach(card => {
+          const h3  = card.querySelector('h3');
+          const aud = card.querySelector('audio');
+          if (!h3 || !aud) return;
+          const title = h3.textContent.trim();
+          const src   = aud.getAttribute('src') || '';
+          const featured = (src === featuredSrc);
+          musicTracks.push({ title, src, featured });
+        });
+
+        /* If none are marked featured but we have a src, mark by src match */
+        if (featuredSrc && !musicTracks.some(t => t.featured)) {
+          const match = musicTracks.find(t => t.src === featuredSrc);
+          if (match) match.featured = true;
+        }
+
+        renderTrackList();
+        updateFeaturedDisplay();
+        setMusicStatus('Loaded. Edit and Save Music when ready.');
+
+      } catch (e) {
+        setMusicStatus('Could not load music.html: ' + e.message, 'err');
+        console.warn(e);
+      }
+    }
+
+    /* ── Render track list ──────────────────────────────────── */
+    function renderTrackList() {
+      const ul = document.getElementById('trackList');
+      ul.innerHTML = '';
+      musicTracks.forEach((track, i) => addTrackItem(track, i));
+    }
+
+    function addTrackItem(track, index) {
+      const ul = document.getElementById('trackList');
+      const li = document.createElement('li');
+      li.className = 'track-item';
+      li.dataset.index = index;
+      li.draggable = true;
+
+      /* Drag handle */
+      const handle = document.createElement('span');
+      handle.className = 'track-drag-handle';
+      handle.textContent = '☰';
+      li.appendChild(handle);
+
+      /* Title input */
+      const titleInput = document.createElement('input');
+      titleInput.className = 'track-title-input';
+      titleInput.type  = 'text';
+      titleInput.value = track.title;
+      titleInput.addEventListener('input', () => {
+        musicTracks[index].title = titleInput.value;
+      });
+      li.appendChild(titleInput);
+
+      /* Src label */
+      const srcLabel = document.createElement('span');
+      srcLabel.className   = 'track-src-label';
+      srcLabel.textContent = track.src.replace('assets/audio/', '');
+      srcLabel.title       = track.src;
+      li.appendChild(srcLabel);
+
+      /* Pin button */
+      const pin = document.createElement('button');
+      pin.className = 'btn-pin' + (track.featured ? ' pinned' : '');
+      pin.textContent = '★';
+      pin.title = 'Pin as featured';
+      pin.addEventListener('click', () => {
+        musicTracks.forEach(t => t.featured = false);
+        musicTracks[index].featured = true;
+        renderTrackList();
+        updateFeaturedDisplay();
+      });
+      li.appendChild(pin);
+
+      /* Remove button */
+      const rm = document.createElement('button');
+      rm.className = 'btn-remove-track';
+      rm.textContent = '×';
+      rm.title = 'Remove track';
+      rm.addEventListener('click', () => {
+        musicTracks.splice(index, 1);
+        renderTrackList();
+        updateFeaturedDisplay();
+      });
+      li.appendChild(rm);
+
+      /* Drag events */
+      li.addEventListener('dragstart', e => {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(index));
+        li.classList.add('dragging');
+      });
+      li.addEventListener('dragend', () => li.classList.remove('dragging'));
+      li.addEventListener('dragover', e => { e.preventDefault(); li.classList.add('drag-over'); });
+      li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
+      li.addEventListener('drop', e => {
+        e.preventDefault();
+        li.classList.remove('drag-over');
+        const fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        const toIdx   = index;
+        if (fromIdx === toIdx) return;
+        const moved = musicTracks.splice(fromIdx, 1)[0];
+        musicTracks.splice(toIdx, 0, moved);
+        renderTrackList();
+      });
+
+      ul.appendChild(li);
+    }
+
+    function updateFeaturedDisplay() {
+      const feat = musicTracks.find(t => t.featured);
+      document.getElementById('featuredDisplay').textContent =
+        feat ? `${feat.title}  (${feat.src.replace('assets/audio/', '')})` : 'none pinned';
+    }
+
+    /* ── Sort A–Z ────────────────────────────────────────────── */
+    window.sortTracksAZ = function () {
+      musicTracks.sort((a, b) => a.title.localeCompare(b.title));
+      renderTrackList();
+    };
+
+    /* ── Upload mp3 ─────────────────────────────────────────── */
+    window.uploadTrack = async function () {
+      if (!rootHandle) { setMusicStatus('Select project folder first.', 'err'); return; }
+
+      try {
+        /* Use file picker — File System Access API */
+        const [fileHandle] = await window.showOpenFilePicker({
+          types: [{ description: 'MP3 audio', accept: { 'audio/mpeg': ['.mp3'] } }],
+          multiple: false
+        });
+
+        const file     = await fileHandle.getFile();
+        const audioDir = await rootHandle.getDirectoryHandle('assets', { create: false })
+                                         .then(d => d.getDirectoryHandle('audio', { create: true }));
+
+        const outFH  = await audioDir.getFileHandle(file.name, { create: true });
+        const writer = await outFH.createWritable();
+        await writer.write(await file.arrayBuffer());
+        await writer.close();
+
+        const title = file.name.replace(/\.mp3$/i, '');
+        const src   = `assets/audio/${file.name}`;
+        musicTracks.push({ title, src, featured: false });
+        renderTrackList();
+        setMusicStatus(`Uploaded: ${file.name}`);
+
+      } catch (e) {
+        if (e.name !== 'AbortError') setMusicStatus('Upload failed: ' + e.message, 'err');
+      }
+    };
+
+    /* ── Replace self-hosted grid in HTML string ────────────── */
+    function replaceGridContent(html, newCards) {
+      const OPEN_TAG  = '<div class="self-hosted-grid">';
+      const END_MARKER = '<!-- END-SELF-HOSTED-GRID -->';
+
+      const start = html.indexOf(OPEN_TAG);
+      if (start === -1) throw new Error('self-hosted-grid not found in music.html');
+
+      const end = html.indexOf(END_MARKER);
+      if (end === -1) throw new Error('END-SELF-HOSTED-GRID marker not found in music.html');
+
+      // end points to start of the marker; we include it in the replacement
+      const afterMarker = end + END_MARKER.length;
+
+      const gridBlock =
+        OPEN_TAG + '\n\n' +
+        newCards + '\n\n      </div>\n      ' + END_MARKER;
+
+      return html.slice(0, start) + gridBlock + html.slice(afterMarker);
+    }
+
+    /* ── Save Music ─────────────────────────────────────────── */
+    window.saveMusic = async function () {
+      if (!rootHandle) { setMusicStatus('Select project folder first.', 'err'); return; }
+
+      const btn = document.getElementById('saveMusicBtn');
+      btn.disabled = true;
+      setMusicStatus('Saving…');
+
+      try {
+        const fh   = await rootHandle.getFileHandle('music.html');
+        let   html = await (await fh.getFile()).text();
+
+        /* 1. Update Spotify src */
+        const newSpotifySrc = document.getElementById('spotifySrc').value.trim();
+        if (newSpotifySrc) {
+          html = html.replace(
+            /(<iframe[^>]*?src=")[^"]*"([^>]*?spotify[^>]*>)/,
+            (_, pre, post) => pre + newSpotifySrc + '"' + post
+          );
+        }
+
+        /* 2. Update SoundCloud src */
+        const newScSrc = document.getElementById('soundcloudSrc').value.trim();
+        if (newScSrc) {
+          html = html.replace(
+            /(<iframe[^>]*?src=")[^"]*"([^>]*?soundcloud[^>]*>)/,
+            (_, pre, post) => pre + newScSrc + '"' + post
+          );
+        }
+
+        /* 3. Update featured track */
+        const feat = musicTracks.find(t => t.featured);
+        if (feat) {
+          /* Update h3 title */
+          html = html.replace(
+            /(<h3 id="featured-title">)[^<]*/,
+            `$1${feat.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}`
+          );
+          /* Update audio source */
+          html = html.replace(
+            /(<audio[^>]*id="featured-audio"[^>]*>[\s\S]*?<source\s+src=")[^"]*"/,
+            `$1${feat.src}"`
+          );
+          /* Update download link */
+          html = html.replace(
+            /(<a[^>]*id="featured-dl"[^>]*href=")[^"]*"/,
+            `$1${feat.src}"`
+          );
+        }
+
+        /* 4. Rebuild grid cards */
+        const newCards = musicTracks.map(t => {
+          const title = t.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          return `        <div class="card">
+          <h3>${title}</h3>
+          <div class="audio-row">
+            <audio controls preload="metadata" src="${t.src}"></audio>
+            <a class="dl" href="${t.src}" download title="Download">↓</a>
+          </div>
+        </div>`;
+        }).join('\n\n');
+
+        html = replaceGridContent(html, newCards);
+
+        /* Write */
+        const writer = await fh.createWritable();
+        await writer.write(html);
+        await writer.close();
+
+        setMusicStatus('\u2713 music.html saved. git push when ready.', 'ok');
+
+      } catch (e) {
+        setMusicStatus('Error: ' + e.message, 'err');
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    /* ── Music status helper ─────────────────────────────────── */
+    function setMusicStatus(msg, type) {
+      const el = document.getElementById('musicStatusMsg');
+      el.textContent = msg;
+      el.className   = 'status-msg ' + (type || '');
+    }
+
+    /* ── Boot ───────────────────────────────────────────────── */
+    init();
+
+  })();
+  </script>
+</body>
+</html>
