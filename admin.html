@@ -698,6 +698,7 @@
         <div class="music-actions">
           <button class="btn-music-action" onclick="sortTracksAZ()">Sort A–Z</button>
           <button class="btn-music-action" onclick="uploadTrack()">Upload mp3…</button>
+          <button class="btn-music-action" onclick="tagAllTracks()">Tag All Tracks</button>
         </div>
 
         <ul class="track-list" id="trackList"></ul>
@@ -1454,11 +1455,97 @@ ${body}
         feat ? `${feat.title}  (${feat.src.replace('assets/audio/', '')})` : 'none pinned';
     }
 
+    /* ── Tag all existing tracks ────────────────────────────── */
+    window.tagAllTracks = async function () {
+      if (!rootHandle) { setMusicStatus('Select project folder first.', 'err'); return; }
+      if (!musicTracks.length) { setMusicStatus('No tracks loaded.', 'err'); return; }
+
+      setMusicStatus('Tagging tracks…');
+      try {
+        const audioDir = await rootHandle.getDirectoryHandle('assets')
+                                         .then(d => d.getDirectoryHandle('audio'));
+        let count = 0;
+        for (const track of musicTracks) {
+          const filename = track.src.replace('assets/audio/', '');
+          try {
+            const fh  = await audioDir.getFileHandle(filename);
+            const buf = await (await fh.getFile()).arrayBuffer();
+            const patched = patchId3(buf, track.title, 'epsilver', 'epsilver.xyz');
+            const w = await fh.createWritable();
+            await w.write(patched);
+            await w.close();
+            count++;
+          } catch (e) {
+            console.warn(`Skipped ${filename}:`, e);
+          }
+        }
+        setMusicStatus(`\u2713 Tagged ${count} of ${musicTracks.length} tracks.`, 'ok');
+      } catch (e) {
+        setMusicStatus('Error: ' + e.message, 'err');
+        console.error(e);
+      }
+    };
+
     /* ── Sort A–Z ────────────────────────────────────────────── */
     window.sortTracksAZ = function () {
       musicTracks.sort((a, b) => a.title.localeCompare(b.title));
       renderTrackList();
     };
+
+    /* ── ID3v2 tag utilities ─────────────────────────────────── */
+    function buildTextFrame(id, text) {
+      const textBytes = new TextEncoder().encode(text);
+      const data = new Uint8Array(1 + textBytes.length);
+      data[0] = 0x03; // UTF-8
+      data.set(textBytes, 1);
+      const frame = new Uint8Array(10 + data.length);
+      for (let i = 0; i < 4; i++) frame[i] = id.charCodeAt(i);
+      const sz = data.length;
+      frame[4] = (sz >> 24) & 0xFF;
+      frame[5] = (sz >> 16) & 0xFF;
+      frame[6] = (sz >> 8)  & 0xFF;
+      frame[7] =  sz        & 0xFF;
+      frame.set(data, 10);
+      return frame;
+    }
+
+    function buildId3Tag(title, artist, album) {
+      const frames = [
+        buildTextFrame('TIT2', title),
+        buildTextFrame('TPE1', artist),
+        buildTextFrame('TALB', album),
+      ];
+      const bodyLen = frames.reduce((s, f) => s + f.length, 0);
+      const tag = new Uint8Array(10 + bodyLen);
+      tag[0] = 0x49; tag[1] = 0x44; tag[2] = 0x33; // "ID3"
+      tag[3] = 0x03; // v2.3
+      tag[6] = (bodyLen >> 21) & 0x7F;
+      tag[7] = (bodyLen >> 14) & 0x7F;
+      tag[8] = (bodyLen >> 7)  & 0x7F;
+      tag[9] =  bodyLen        & 0x7F;
+      let off = 10;
+      for (const f of frames) { tag.set(f, off); off += f.length; }
+      return tag;
+    }
+
+    function stripId3(buf) {
+      const v = new DataView(buf);
+      if (v.getUint8(0) === 0x49 && v.getUint8(1) === 0x44 && v.getUint8(2) === 0x33) {
+        const sz = ((v.getUint8(6) & 0x7F) << 21) | ((v.getUint8(7) & 0x7F) << 14) |
+                   ((v.getUint8(8) & 0x7F) << 7)  |  (v.getUint8(9) & 0x7F);
+        return buf.slice(10 + sz);
+      }
+      return buf;
+    }
+
+    function patchId3(buf, title, artist, album) {
+      const audio  = stripId3(buf);
+      const newTag = buildId3Tag(title, artist, album);
+      const out    = new Uint8Array(newTag.length + audio.byteLength);
+      out.set(newTag, 0);
+      out.set(new Uint8Array(audio), newTag.length);
+      return out.buffer;
+    }
 
     /* ── Upload mp3 ─────────────────────────────────────────── */
     window.uploadTrack = async function () {
@@ -1472,15 +1559,16 @@ ${body}
         });
 
         const file     = await fileHandle.getFile();
+        const title    = file.name.replace(/\.mp3$/i, '');
+        const patched  = patchId3(await file.arrayBuffer(), title, 'epsilver', 'epsilver.xyz');
+
         const audioDir = await rootHandle.getDirectoryHandle('assets', { create: false })
                                          .then(d => d.getDirectoryHandle('audio', { create: true }));
 
         const outFH  = await audioDir.getFileHandle(file.name, { create: true });
         const writer = await outFH.createWritable();
-        await writer.write(await file.arrayBuffer());
+        await writer.write(patched);
         await writer.close();
-
-        const title = file.name.replace(/\.mp3$/i, '');
         const src   = `assets/audio/${file.name}`;
         musicTracks.push({ title, src, featured: false });
         renderTrackList();
