@@ -226,6 +226,13 @@ body.blog   .site-nav a[href="blog.html"]{
   text-decoration:underline;
 }
 
+body:not(.home) .subsidiary{
+  position:static;
+  display:block;
+  text-align:right;
+  padding:40px 20px 24px;
+}
+
 /* ===== Blog two-column layout ===== */
 .blog-layout{
   display:grid;
@@ -339,7 +346,7 @@ body.post .site-nav a[href="../blog.html"]{
 }
 
 .dl{
-  font-size:15px;
+  font-size:22px;
   text-decoration:none;
   color:var(--text);
   opacity:0.3;
