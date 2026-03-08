@@ -160,28 +160,33 @@
           return b - a;
         })
         .forEach(function(y){
-          archiveHtml += '<li>' + y + ' (' + yearMap[y] + ')</li>';
+          archiveHtml += '<li><span class="label-link" data-year="' + y + '">' + y + ' (' + yearMap[y] + ')</span></li>';
         });
       archiveHtml += '</ul>';
       sidebar.appendChild(section('Blog Archive', archiveHtml));
 
-      // Filter by label
+      // Filter by label or year
       var active = null;
       sidebar.addEventListener('click', function(e){
         var t = e.target;
         if(!t.classList.contains('label-link')) return;
         var slug = t.dataset.slug;
-        if(active === slug){
+        var year = t.dataset.year;
+        var key  = slug || year;
+        if(active === key){
           active = null;
           articles.forEach(function(a){ a.style.display = ''; });
           sidebar.querySelectorAll('.label-link').forEach(function(l){ l.classList.remove('active'); });
         } else {
-          active = slug;
+          active = key;
           articles.forEach(function(a){
-            a.style.display = a.dataset.category.split(' ').indexOf(slug) !== -1 ? '' : 'none';
+            var match = slug
+              ? a.dataset.category.split(' ').indexOf(slug) !== -1
+              : (a.dataset.date === 'undated' ? 'Undated' : a.dataset.date) === year;
+            a.style.display = match ? '' : 'none';
           });
           sidebar.querySelectorAll('.label-link').forEach(function(l){
-            l.classList.toggle('active', l.dataset.slug === slug);
+            l.classList.toggle('active', (l.dataset.slug || l.dataset.year) === key);
           });
         }
       });
