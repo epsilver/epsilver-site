@@ -582,6 +582,63 @@
     .btn-save-music:hover { opacity: 0.85; }
     .btn-save-music:disabled { opacity: 0.35; cursor: not-allowed; }
 
+    /* ===== Project list ===== */
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 13px;
+    }
+
+    .project-item-title {
+      flex: 1;
+      font-family: "HelveticaNeueMedium", sans-serif;
+    }
+
+    .project-item-url {
+      font-size: 11px;
+      opacity: 0.4;
+      font-family: "HelveticaNeueLight", monospace;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-project-action {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 2px 6px;
+      opacity: 0.35;
+      font-family: "HelveticaNeueMedium", sans-serif;
+      color: #000;
+      flex-shrink: 0;
+    }
+
+    .btn-project-action:hover { opacity: 0.8; }
+
+    .project-form {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .project-editing-badge {
+      display: none;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: #EC6D69;
+      margin-bottom: 12px;
+      font-family: "HelveticaNeueMedium", sans-serif;
+    }
+
+    .project-editing-badge.visible { display: block; }
+
     @media (max-width: 780px) {
       .editor-wrap { padding: 28px 20px 32px; margin: 0 12px 60px; }
     }
@@ -613,6 +670,7 @@
   <div class="tab-bar">
     <button class="tab-btn active" id="tabBlog" onclick="switchTab('blog')">Blog</button>
     <button class="tab-btn" id="tabMusic" onclick="switchTab('music')">Music</button>
+    <button class="tab-btn" id="tabProjects" onclick="switchTab('projects')">Projects</button>
   </div>
 
   <!-- Editor wrap (shared card for both tabs) -->
@@ -711,6 +769,43 @@
 
     </div>
 
+    <!-- ══════════════════════════════════════════════════════════════
+         PROJECTS PANEL
+    ══════════════════════════════════════════════════════════════ -->
+    <div id="projectsPanel" style="display:none">
+
+      <div class="music-section">
+        <div class="music-field-label">Existing projects</div>
+        <ul class="track-list" id="projectList" style="margin-bottom:0"></ul>
+      </div>
+
+      <div class="music-section project-form">
+        <div class="project-editing-badge" id="projectEditingBadge">Editing project</div>
+
+        <div class="music-field-label" style="margin-bottom:14px">Add / edit project</div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <input class="music-embed-input" id="projTitle" type="text" placeholder="Title" autocomplete="off" />
+          <input class="music-embed-input" id="projUrl"   type="text" placeholder="https://…" autocomplete="off" />
+          <input class="music-embed-input" id="projSub"   type="text" placeholder="Subtitle (optional)" autocomplete="off" />
+          <input class="music-embed-input" id="projDesc"  type="text" placeholder="Description (optional)" autocomplete="off" />
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap">
+          <button class="btn-save-music" id="addProjectBtn" onclick="addOrUpdateProject()">Add Project</button>
+          <button class="btn-music-action" id="cancelProjectBtn" onclick="cancelEditProject()" style="display:none">Cancel</button>
+        </div>
+      </div>
+
+      <div class="music-section" style="border-bottom:none">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <button class="btn-save-music" id="saveProjectsBtn" onclick="saveProjects()">Save Projects</button>
+          <div class="status-msg" id="projectsStatusMsg">Load projects to start.</div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <script>
@@ -761,6 +856,7 @@
           setStatus('Ready.');
           await loadPostList();
           await loadMusicPage();
+          await loadProjectsPage();
           return;
         }
 
@@ -782,6 +878,7 @@
             setStatus('Ready.');
             await loadPostList();
             await loadMusicPage();
+            await loadProjectsPage();
           } else { showFirstTimeSetup(); }
         } catch (_) { showFirstTimeSetup(); }
       };
@@ -809,6 +906,7 @@
         setStatus('Folder saved. Ready.');
         await loadPostList();
         await loadMusicPage();
+        await loadProjectsPage();
       } catch (_) {
         setStatus('Setup cancelled or wrong folder.', 'err');
       }
@@ -820,10 +918,12 @@
        TAB SWITCHING
     ══════════════════════════════════════════════════════════════ */
     window.switchTab = function (tab) {
-      document.getElementById('blogPanel').style.display  = tab === 'blog'  ? 'block' : 'none';
-      document.getElementById('musicPanel').style.display = tab === 'music' ? 'block' : 'none';
-      document.getElementById('tabBlog').classList.toggle('active',  tab === 'blog');
-      document.getElementById('tabMusic').classList.toggle('active', tab === 'music');
+      document.getElementById('blogPanel').style.display     = tab === 'blog'     ? 'block' : 'none';
+      document.getElementById('musicPanel').style.display    = tab === 'music'    ? 'block' : 'none';
+      document.getElementById('projectsPanel').style.display = tab === 'projects' ? 'block' : 'none';
+      document.getElementById('tabBlog').classList.toggle('active',     tab === 'blog');
+      document.getElementById('tabMusic').classList.toggle('active',    tab === 'music');
+      document.getElementById('tabProjects').classList.toggle('active', tab === 'projects');
     };
 
     /* ══════════════════════════════════════════════════════════════
@@ -1173,6 +1273,7 @@
 
     <div class="site-nav-wrap">
       <nav class="site-nav">
+        <a href="../projects.html">projects</a>
         <a href="../music.html">music</a>
         <a href="../blog.html">blog</a>
         <a href="../art.html">art</a>
@@ -1682,6 +1783,175 @@ ${body}
     /* ── Music status helper ─────────────────────────────────── */
     function setMusicStatus(msg, type) {
       const el = document.getElementById('musicStatusMsg');
+      el.textContent = msg;
+      el.className   = 'status-msg ' + (type || '');
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       PROJECTS TAB
+    ══════════════════════════════════════════════════════════════ */
+
+    let siteProjects     = [];  // [{ title, url, subtitle, description }]
+    let editingProjectIdx = null;
+
+    async function loadProjectsPage() {
+      if (!rootHandle) return;
+      try {
+        const fh   = await rootHandle.getFileHandle('projects.html');
+        const text = await (await fh.getFile()).text();
+        const doc  = new DOMParser().parseFromString(text, 'text/html');
+
+        siteProjects = [];
+        doc.querySelectorAll('main.page .card').forEach(card => {
+          const h3    = card.querySelector('h3');
+          const a     = h3 ? h3.querySelector('a') : null;
+          const sub   = card.querySelector('.post-subtitle');
+          const paras = Array.from(card.querySelectorAll('p:not(.post-subtitle)'));
+          siteProjects.push({
+            title:       a    ? a.textContent.trim()  : (h3 ? h3.textContent.trim() : ''),
+            url:         a    ? (a.getAttribute('href') || '') : '',
+            subtitle:    sub  ? sub.textContent.trim() : '',
+            description: paras.length ? paras[0].textContent.trim() : '',
+          });
+        });
+
+        renderProjectList();
+        setProjectsStatus('Loaded. Edit and Save Projects when ready.');
+      } catch (e) {
+        setProjectsStatus('Could not load projects.html: ' + e.message, 'err');
+      }
+    }
+
+    function renderProjectList() {
+      const ul = document.getElementById('projectList');
+      ul.innerHTML = '';
+
+      if (!siteProjects.length) {
+        ul.innerHTML = '<li style="font-size:13px;opacity:0.4;padding:8px 0">No projects yet.</li>';
+        return;
+      }
+
+      siteProjects.forEach((proj, i) => {
+        const li = document.createElement('li');
+        li.className = 'project-item';
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className   = 'project-item-title';
+        titleSpan.textContent = proj.title;
+
+        const urlSpan = document.createElement('span');
+        urlSpan.className   = 'project-item-url';
+        urlSpan.textContent = proj.url.replace(/^https?:\/\//, '');
+        urlSpan.title       = proj.url;
+
+        const editBtn = document.createElement('button');
+        editBtn.className   = 'btn-project-action';
+        editBtn.textContent = 'edit';
+        editBtn.addEventListener('click', () => startEditProject(i));
+
+        const rmBtn = document.createElement('button');
+        rmBtn.className   = 'btn-project-action';
+        rmBtn.textContent = '×';
+        rmBtn.style.fontSize = '16px';
+        rmBtn.addEventListener('click', () => {
+          siteProjects.splice(i, 1);
+          renderProjectList();
+          if (editingProjectIdx === i) cancelEditProject();
+        });
+
+        li.append(titleSpan, urlSpan, editBtn, rmBtn);
+        ul.appendChild(li);
+      });
+    }
+
+    function startEditProject(i) {
+      editingProjectIdx = i;
+      const p = siteProjects[i];
+      document.getElementById('projTitle').value = p.title;
+      document.getElementById('projUrl').value   = p.url;
+      document.getElementById('projSub').value   = p.subtitle;
+      document.getElementById('projDesc').value  = p.description;
+      document.getElementById('addProjectBtn').textContent = 'Update Project';
+      document.getElementById('cancelProjectBtn').style.display = '';
+      document.getElementById('projectEditingBadge').classList.add('visible');
+    }
+
+    window.cancelEditProject = function () {
+      editingProjectIdx = null;
+      document.getElementById('projTitle').value = '';
+      document.getElementById('projUrl').value   = '';
+      document.getElementById('projSub').value   = '';
+      document.getElementById('projDesc').value  = '';
+      document.getElementById('addProjectBtn').textContent = 'Add Project';
+      document.getElementById('cancelProjectBtn').style.display = 'none';
+      document.getElementById('projectEditingBadge').classList.remove('visible');
+    };
+
+    window.addOrUpdateProject = function () {
+      const title = document.getElementById('projTitle').value.trim();
+      const url   = document.getElementById('projUrl').value.trim();
+      if (!title || !url) { setProjectsStatus('Title and URL are required.', 'err'); return; }
+
+      const proj = {
+        title,
+        url,
+        subtitle:    document.getElementById('projSub').value.trim(),
+        description: document.getElementById('projDesc').value.trim(),
+      };
+
+      if (editingProjectIdx !== null) {
+        siteProjects[editingProjectIdx] = proj;
+      } else {
+        siteProjects.push(proj);
+      }
+
+      renderProjectList();
+      cancelEditProject();
+      setProjectsStatus(editingProjectIdx !== null ? 'Updated. Hit Save Projects.' : 'Added. Hit Save Projects.');
+    };
+
+    window.saveProjects = async function () {
+      if (!rootHandle) { setProjectsStatus('Select project folder first.', 'err'); return; }
+
+      const btn = document.getElementById('saveProjectsBtn');
+      btn.disabled = true;
+      setProjectsStatus('Saving…');
+
+      try {
+        const fh   = await rootHandle.getFileHandle('projects.html');
+        const text = await (await fh.getFile()).text();
+
+        const cards = siteProjects.map(p => {
+          const t = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+          let html = `    <div class="card">\n`;
+          html    += `      <h3><a href="${t(p.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">${t(p.title)}</a></h3>\n`;
+          if (p.subtitle)    html += `      <p class="post-subtitle">${t(p.subtitle)}</p>\n`;
+          if (p.description) html += `      <p>${t(p.description)}</p>\n`;
+          html    += `      <a class="read-more" href="${t(p.url)}" target="_blank" rel="noopener">visit \u2192</a>\n`;
+          html    += `    </div>`;
+          return html;
+        }).join('\n\n');
+
+        const updated = text.replace(
+          /(<main class="page">)([\s\S]*?)(<\/main>)/,
+          `$1\n\n${cards}\n\n  $3`
+        );
+
+        const w = await fh.createWritable();
+        await w.write(updated);
+        await w.close();
+
+        setProjectsStatus('\u2713 projects.html saved. git push when ready.', 'ok');
+      } catch (e) {
+        setProjectsStatus('Error: ' + e.message, 'err');
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    function setProjectsStatus(msg, type) {
+      const el = document.getElementById('projectsStatusMsg');
       el.textContent = msg;
       el.className   = 'status-msg ' + (type || '');
     }

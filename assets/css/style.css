@@ -159,6 +159,7 @@ body.home .site-nav{
 }
 
 /* Active nav link underline (non-home pages) */
+body.projects .site-nav a[href="projects.html"],
 body.videos .site-nav a[href="videos.html"],
 body.music  .site-nav a[href="music.html"],
 body.art     .site-nav a[href="art.html"],
