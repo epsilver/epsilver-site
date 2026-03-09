@@ -364,7 +364,8 @@ body.post .site-nav a[href="../blog.html"]{
   }
   .blog-sidebar{
     position:static;
-    border-top:1px solid rgba(0,0,0,0.10);
-    padding-top:24px;
+    order:-1;
+    border-bottom:1px solid rgba(0,0,0,0.10);
+    padding-bottom:24px;
   }
 }
