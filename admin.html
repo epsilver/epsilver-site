@@ -792,6 +792,11 @@
           <input class="music-embed-input" id="projUrl"   type="text" placeholder="https://…" autocomplete="off" />
           <input class="music-embed-input" id="projSub"   type="text" placeholder="Subtitle (optional)" autocomplete="off" />
           <input class="music-embed-input" id="projDesc"  type="text" placeholder="Description (optional)" autocomplete="off" />
+          <input type="hidden" id="projImgSrc" />
+          <div style="display:flex;align-items:center;gap:10px">
+            <button class="btn-music-action" onclick="uploadProjectImg()">Upload og image…</button>
+            <span id="projImgLabel" style="font-size:12px;opacity:0.4"></span>
+          </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap">
@@ -1810,11 +1815,13 @@ ${body}
           const a     = h3 ? h3.querySelector('a') : null;
           const sub   = card.querySelector('.post-subtitle');
           const paras = Array.from(card.querySelectorAll('p:not(.post-subtitle)'));
+          const img   = card.querySelector('.project-card-img img');
           siteProjects.push({
             title:       a    ? a.textContent.trim()  : (h3 ? h3.textContent.trim() : ''),
             url:         a    ? (a.getAttribute('href') || '') : '',
             subtitle:    sub  ? sub.textContent.trim() : '',
             description: paras.length ? paras[0].textContent.trim() : '',
+            imgSrc:      img  ? (img.getAttribute('src') || '') : '',
           });
         });
 
@@ -1867,13 +1874,20 @@ ${body}
       });
     }
 
+    function hostnameFromUrl(url) {
+      try { return new URL(url).hostname.replace(/^www\./, ''); }
+      catch { return url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]; }
+    }
+
     function startEditProject(i) {
       editingProjectIdx = i;
       const p = siteProjects[i];
-      document.getElementById('projTitle').value = p.title;
-      document.getElementById('projUrl').value   = p.url;
-      document.getElementById('projSub').value   = p.subtitle;
-      document.getElementById('projDesc').value  = p.description;
+      document.getElementById('projTitle').value  = p.title;
+      document.getElementById('projUrl').value    = p.url;
+      document.getElementById('projSub').value    = p.subtitle;
+      document.getElementById('projDesc').value   = p.description;
+      document.getElementById('projImgSrc').value = p.imgSrc || '';
+      document.getElementById('projImgLabel').textContent = p.imgSrc ? p.imgSrc.split('/').pop() : '';
       document.getElementById('addProjectBtn').textContent = 'Update Project';
       document.getElementById('cancelProjectBtn').style.display = '';
       document.getElementById('projectEditingBadge').classList.add('visible');
@@ -1881,10 +1895,12 @@ ${body}
 
     window.cancelEditProject = function () {
       editingProjectIdx = null;
-      document.getElementById('projTitle').value = '';
-      document.getElementById('projUrl').value   = '';
-      document.getElementById('projSub').value   = '';
-      document.getElementById('projDesc').value  = '';
+      document.getElementById('projTitle').value  = '';
+      document.getElementById('projUrl').value    = '';
+      document.getElementById('projSub').value    = '';
+      document.getElementById('projDesc').value   = '';
+      document.getElementById('projImgSrc').value = '';
+      document.getElementById('projImgLabel').textContent = '';
       document.getElementById('addProjectBtn').textContent = 'Add Project';
       document.getElementById('cancelProjectBtn').style.display = 'none';
       document.getElementById('projectEditingBadge').classList.remove('visible');
@@ -1900,6 +1916,7 @@ ${body}
         url,
         subtitle:    document.getElementById('projSub').value.trim(),
         description: document.getElementById('projDesc').value.trim(),
+        imgSrc:      document.getElementById('projImgSrc').value.trim(),
       };
 
       if (editingProjectIdx !== null) {
@@ -1911,6 +1928,37 @@ ${body}
       renderProjectList();
       cancelEditProject();
       setProjectsStatus(editingProjectIdx !== null ? 'Updated. Hit Save Projects.' : 'Added. Hit Save Projects.');
+    };
+
+    window.uploadProjectImg = async function () {
+      if (!rootHandle) { setProjectsStatus('Select project folder first.', 'err'); return; }
+      const url = document.getElementById('projUrl').value.trim();
+      if (!url) { setProjectsStatus('Enter a URL first.', 'err'); return; }
+
+      try {
+        const [fileHandle] = await window.showOpenFilePicker({
+          types: [{ description: 'Image', accept: { 'image/*': ['.png','.jpg','.jpeg','.webp'] } }],
+          multiple: false
+        });
+        const file     = await fileHandle.getFile();
+        const ext      = file.name.split('.').pop();
+        const hostname = hostnameFromUrl(url);
+        const filename = `${hostname}.${ext}`;
+
+        const ogDir = await rootHandle.getDirectoryHandle('assets')
+                                      .then(d => d.getDirectoryHandle('project-og-img', { create: true }));
+        const outFH = await ogDir.getFileHandle(filename, { create: true });
+        const w     = await outFH.createWritable();
+        await w.write(await file.arrayBuffer());
+        await w.close();
+
+        const imgSrc = `assets/project-og-img/${filename}`;
+        document.getElementById('projImgSrc').value      = imgSrc;
+        document.getElementById('projImgLabel').textContent = filename;
+        setProjectsStatus(`Image saved: ${filename}`);
+      } catch (e) {
+        if (e.name !== 'AbortError') setProjectsStatus('Upload failed: ' + e.message, 'err');
+      }
     };
 
     window.saveProjects = async function () {
@@ -1926,12 +1974,18 @@ ${body}
 
         const cards = siteProjects.map(p => {
           const t = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-          let html = `    <div class="card">\n`;
-          html    += `      <h3><a href="${t(p.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">${t(p.title)}</a></h3>\n`;
-          if (p.subtitle)    html += `      <p class="post-subtitle">${t(p.subtitle)}</p>\n`;
-          if (p.description) html += `      <p>${t(p.description)}</p>\n`;
-          html    += `      <a class="read-more" href="${t(p.url)}" target="_blank" rel="noopener">visit \u2192</a>\n`;
-          html    += `    </div>`;
+          const imgSrc = p.imgSrc || `assets/project-og-img/${hostnameFromUrl(p.url)}.png`;
+          let html  = `    <div class="card project-card">\n`;
+          html     += `      <div class="project-card-body">\n`;
+          html     += `        <h3><a href="${t(p.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">${t(p.title)}</a></h3>\n`;
+          if (p.subtitle)    html += `        <p class="post-subtitle">${t(p.subtitle)}</p>\n`;
+          if (p.description) html += `        <p>${t(p.description)}</p>\n`;
+          html     += `        <a class="read-more" href="${t(p.url)}" target="_blank" rel="noopener">visit \u2192</a>\n`;
+          html     += `      </div>\n`;
+          html     += `      <div class="project-card-img">\n`;
+          html     += `        <img src="${t(imgSrc)}" alt="" />\n`;
+          html     += `      </div>\n`;
+          html     += `    </div>`;
           return html;
         }).join('\n\n');
 

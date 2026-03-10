@@ -189,6 +189,31 @@ body.blog   .site-nav a[href="blog.html"]{
 
 
 
+/* ===== Project cards ===== */
+.project-card{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+}
+
+.project-card-body{ flex:1; }
+
+.project-card-img{
+  flex-shrink:0;
+  width:200px;
+}
+
+.project-card-img img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+@media(max-width:600px){
+  .project-card{ flex-direction:column; }
+  .project-card-img{ width:100%; }
+}
+
 /* ===== Art tiles ===== */
 .art-grid{
   display:grid;
