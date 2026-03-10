@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "Q33999": {
+      "type": "item",
+      "id": "Q33999",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "actor"
+        }
+      }
+    },
+    "Q36834": {
+      "type": "item",
+      "id": "Q36834",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "composer"
+        }
+      }
+    },
+    "Q177220": {
+      "type": "item",
+      "id": "Q177220",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "singer"
+        }
+      }
+    },
+    "Q183945": {
+      "type": "item",
+      "id": "Q183945",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "record producer"
+        }
+      }
+    },
+    "Q12362622": {
+      "type": "item",
+      "id": "Q12362622",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "philanthropist"
+        }
+      }
+    },
+    "Q488205": {
+      "type": "item",
+      "id": "Q488205",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "singer-songwriter"
+        }
+      }
+    },
+    "Q822146": {
+      "type": "item",
+      "id": "Q822146",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "lyricist"
+        }
+      }
+    },
+    "Q2340668": {
+      "type": "item",
+      "id": "Q2340668",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "music video director"
+        }
+      }
+    },
+    "Q2526255": {
+      "type": "item",
+      "id": "Q2526255",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "film director"
+        }
+      }
+    },
+    "Q3455803": {
+      "type": "item",
+      "id": "Q3455803",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "director"
+        }
+      }
+    }
+  },
+  "success": 1
+}

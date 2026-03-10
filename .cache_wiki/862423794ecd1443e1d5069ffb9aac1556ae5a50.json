@@ -1,0 +1,325 @@
+{
+  "warnings": {
+    "main": {
+      "*": "Subscribe to the mediawiki-api-announce mailing list at <https://lists.wikimedia.org/postorius/lists/mediawiki-api-announce.lists.wikimedia.org/> for notice of API deprecations and breaking changes. Use [[Special:ApiFeatureUsage]] to see usage of deprecated features by your application."
+    },
+    "parse": {
+      "*": "\"prop=sections\" is deprecated since MediaWiki 1.46. Use \"prop=tocdata\" instead."
+    }
+  },
+  "parse": {
+    "title": "Taylor Swift",
+    "pageid": 5422144,
+    "sections": [
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Life and career",
+        "number": "1",
+        "index": "1",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 6681,
+        "anchor": "Life_and_career",
+        "linkAnchor": "Life_and_career"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Early life",
+        "number": "1.1",
+        "index": "2",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 6703,
+        "anchor": "Early_life",
+        "linkAnchor": "Early_life"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2004–2008: Career beginnings and <i>Taylor Swift</i>",
+        "number": "1.2",
+        "index": "3",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 21990,
+        "anchor": "2004–2008:_Career_beginnings_and_Taylor_Swift",
+        "linkAnchor": "2004–2008:_Career_beginnings_and_Taylor_Swift"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2008–2010: <i>Fearless</i>",
+        "number": "1.3",
+        "index": "4",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 37139,
+        "anchor": "2008–2010:_Fearless",
+        "linkAnchor": "2008–2010:_Fearless"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2010–2014: <i>Speak Now</i> and <i>Red</i>",
+        "number": "1.4",
+        "index": "5",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 52824,
+        "anchor": "2010–2014:_Speak_Now_and_Red",
+        "linkAnchor": "2010–2014:_Speak_Now_and_Red"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2014–2018: <i>1989</i> and <i>Reputation</i>",
+        "number": "1.5",
+        "index": "6",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 71528,
+        "anchor": "2014–2018:_1989_and_Reputation",
+        "linkAnchor": "2014–2018:_1989_and_Reputation"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2018–2021: <i>Lover</i>, <i>Folklore</i>, and <i>Evermore</i>",
+        "number": "1.6",
+        "index": "7",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 99611,
+        "anchor": "2018–2021:_Lover,_Folklore,_and_Evermore",
+        "linkAnchor": "2018–2021:_Lover,_Folklore,_and_Evermore"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2021–2023: Re-recordings and <i>Midnights</i>",
+        "number": "1.7",
+        "index": "8",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 116507,
+        "anchor": "2021–2023:_Re-recordings_and_Midnights",
+        "linkAnchor": "2021–2023:_Re-recordings_and_Midnights"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "2023–present: The Eras Tour, <i>The Tortured Poets Department</i>, and <i>The Life of a Showgirl</i>",
+        "number": "1.8",
+        "index": "9",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 134937,
+        "anchor": "2023–present:_The_Eras_Tour,_The_Tortured_Poets_Department,_and_The_Life_of_a_Showgirl",
+        "linkAnchor": "2023–present:_The_Eras_Tour,_The_Tortured_Poets_Department,_and_The_Life_of_a_Showgirl"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Artistry",
+        "number": "2",
+        "index": "10",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 159954,
+        "anchor": "Artistry",
+        "linkAnchor": "Artistry"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Musical styles",
+        "number": "2.1",
+        "index": "11",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 159969,
+        "anchor": "Musical_styles",
+        "linkAnchor": "Musical_styles"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Voice",
+        "number": "2.2",
+        "index": "12",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 177044,
+        "anchor": "Voice",
+        "linkAnchor": "Voice"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Songwriting",
+        "number": "2.3",
+        "index": "13",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 187374,
+        "anchor": "Songwriting",
+        "linkAnchor": "Songwriting"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Performances and stage",
+        "number": "2.4",
+        "index": "14",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 210665,
+        "anchor": "Performances_and_stage",
+        "linkAnchor": "Performances_and_stage"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Videos and filmmaking",
+        "number": "2.5",
+        "index": "15",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 217484,
+        "anchor": "Videos_and_filmmaking",
+        "linkAnchor": "Videos_and_filmmaking"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Achievements",
+        "number": "3",
+        "index": "16",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 223367,
+        "anchor": "Achievements",
+        "linkAnchor": "Achievements"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Public image",
+        "number": "4",
+        "index": "17",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 245979,
+        "anchor": "Public_image",
+        "linkAnchor": "Public_image"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Legacy",
+        "number": "5",
+        "index": "18",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 250889,
+        "anchor": "Legacy",
+        "linkAnchor": "Legacy"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Wealth and endorsements",
+        "number": "6",
+        "index": "19",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 266167,
+        "anchor": "Wealth_and_endorsements",
+        "linkAnchor": "Wealth_and_endorsements"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Social activism",
+        "number": "7",
+        "index": "20",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 279578,
+        "anchor": "Social_activism",
+        "linkAnchor": "Social_activism"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Philanthropy",
+        "number": "8",
+        "index": "21",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 290940,
+        "anchor": "Philanthropy",
+        "linkAnchor": "Philanthropy"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Discography",
+        "number": "9",
+        "index": "22",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 314124,
+        "anchor": "Discography",
+        "linkAnchor": "Discography"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Filmography",
+        "number": "10",
+        "index": "23",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 315007,
+        "anchor": "Filmography",
+        "linkAnchor": "Filmography"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "Tours",
+        "number": "11",
+        "index": "24",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 315824,
+        "anchor": "Tours",
+        "linkAnchor": "Tours"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "See also",
+        "number": "12",
+        "index": "25",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 316090,
+        "anchor": "See_also",
+        "linkAnchor": "See_also"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "References",
+        "number": "13",
+        "index": "26",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 316331,
+        "anchor": "References",
+        "linkAnchor": "References"
+      },
+      {
+        "toclevel": 2,
+        "level": "3",
+        "line": "Cited literature",
+        "number": "13.1",
+        "index": "27",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 316361,
+        "anchor": "Cited_literature",
+        "linkAnchor": "Cited_literature"
+      },
+      {
+        "toclevel": 1,
+        "level": "2",
+        "line": "External links",
+        "number": "14",
+        "index": "28",
+        "fromtitle": "Taylor_Swift",
+        "byteoffset": 324518,
+        "anchor": "External_links",
+        "linkAnchor": "External_links"
+      }
+    ],
+    "showtoc": ""
+  }
+}

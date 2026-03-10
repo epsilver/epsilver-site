@@ -1,0 +1,43 @@
+{
+  "batchcomplete": "",
+  "continue": {
+    "sroffset": 3,
+    "continue": "-||"
+  },
+  "query": {
+    "searchinfo": {
+      "totalhits": 12,
+      "suggestion": "critical",
+      "suggestionsnippet": "critical"
+    },
+    "search": [
+      {
+        "ns": 0,
+        "title": "Cr1TiKaL",
+        "pageid": 66196656,
+        "size": 78378,
+        "wordcount": 5084,
+        "snippet": "the original on December 19, 2023. Retrieved December 19, 2023. &quot;Moist<span class=\"searchmatch\">Critikal</span> &amp; Hasanabi Discuss Creator Clash, Guns, Responding To Trolls &amp; More&quot;. YouTube",
+        "timestamp": "2026-03-08T20:50:58Z"
+      },
+      {
+        "ns": 0,
+        "title": "Kids Again (Example song)",
+        "pageid": 41602646,
+        "size": 5554,
+        "wordcount": 382,
+        "snippet": "from MOTi, Zed Bias, Dimension and <span class=\"searchmatch\">Critikal</span> as well as an extended mix. On 20 January the Zed Bias, MOTi and <span class=\"searchmatch\">Critikal</span> remixes were uploaded to Example&#039;s",
+        "timestamp": "2025-10-02T06:38:17Z"
+      },
+      {
+        "ns": 0,
+        "title": "Live Life Living",
+        "pageid": 42110410,
+        "size": 23188,
+        "wordcount": 1709,
+        "snippet": "consist entirely of productions by Gleave, Price, Fraser T Smith and Alf &quot;<span class=\"searchmatch\">Critikal</span>&quot; Bamford. Bamford is responsible for additional production on every track",
+        "timestamp": "2026-03-09T20:14:50Z"
+      }
+    ]
+  }
+}

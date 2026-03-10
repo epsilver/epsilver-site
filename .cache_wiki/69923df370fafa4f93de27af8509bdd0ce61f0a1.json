@@ -1,0 +1,43 @@
+{
+  "batchcomplete": "",
+  "continue": {
+    "sroffset": 3,
+    "continue": "-||"
+  },
+  "query": {
+    "searchinfo": {
+      "totalhits": 18352,
+      "suggestion": "taylor shift",
+      "suggestionsnippet": "taylor shift"
+    },
+    "search": [
+      {
+        "ns": 0,
+        "title": "Taylor Swift",
+        "pageid": 5422144,
+        "size": 330385,
+        "wordcount": 24958,
+        "snippet": "<span class=\"searchmatch\">Taylor</span> Alison <span class=\"searchmatch\">Swift</span> (born December 13, 1989) is an American singer-songwriter. An influential figure in popular culture, she is known for her autobiographical",
+        "timestamp": "2026-03-09T16:43:21Z"
+      },
+      {
+        "ns": 0,
+        "title": "Red (Taylor Swift album)",
+        "pageid": 36715953,
+        "size": 176973,
+        "wordcount": 13041,
+        "snippet": "singer-songwriter <span class=\"searchmatch\">Taylor</span> <span class=\"searchmatch\">Swift</span>. It was released on October 22, 2012, through Big Machine Records. Inspired by a breakup that left behind emotional tumult, <span class=\"searchmatch\">Swift</span> framed",
+        "timestamp": "2026-03-05T21:22:00Z"
+      },
+      {
+        "ns": 0,
+        "title": "Taylor Swift albums discography",
+        "pageid": 8108132,
+        "size": 78392,
+        "wordcount": 4328,
+        "snippet": "The American singer-songwriter <span class=\"searchmatch\">Taylor</span> <span class=\"searchmatch\">Swift</span> has released 12 original albums, 4 re-recorded albums, 5 extended plays (EPs), and 4 live albums. In the United",
+        "timestamp": "2026-03-06T21:20:12Z"
+      }
+    ]
+  }
+}

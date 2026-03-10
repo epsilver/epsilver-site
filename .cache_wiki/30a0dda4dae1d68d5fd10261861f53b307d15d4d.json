@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "Q17125263": {
+      "type": "item",
+      "id": "Q17125263",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "YouTuber"
+        }
+      }
+    },
+    "Q2405480": {
+      "type": "item",
+      "id": "Q2405480",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "voice actor"
+        }
+      }
+    },
+    "Q57414145": {
+      "type": "item",
+      "id": "Q57414145",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "online streamer"
+        }
+      }
+    },
+    "Q33999": {
+      "type": "item",
+      "id": "Q33999",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "actor"
+        }
+      }
+    },
+    "Q36180": {
+      "type": "item",
+      "id": "Q36180",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "writer"
+        }
+      }
+    },
+    "Q22662561": {
+      "type": "item",
+      "id": "Q22662561",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "game show host"
+        }
+      }
+    },
+    "Q10873124": {
+      "type": "item",
+      "id": "Q10873124",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "chess player"
+        }
+      }
+    }
+  },
+  "success": 1
+}

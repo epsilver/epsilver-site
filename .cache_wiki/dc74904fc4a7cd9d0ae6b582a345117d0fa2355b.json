@@ -1,0 +1,41 @@
+{
+  "batchcomplete": "",
+  "continue": {
+    "sroffset": 3,
+    "continue": "-||"
+  },
+  "query": {
+    "searchinfo": {
+      "totalhits": 37642
+    },
+    "search": [
+      {
+        "ns": 0,
+        "title": "Barack Obama",
+        "pageid": 534366,
+        "size": 397257,
+        "wordcount": 31936,
+        "snippet": "Barack Hussein <span class=\"searchmatch\">Obama</span> II (born August 4, 1961) is an American politician who served as the 44th president of the United States from 2009 to 2017. A member",
+        "timestamp": "2026-03-08T00:50:30Z"
+      },
+      {
+        "ns": 0,
+        "title": "Michelle Obama",
+        "pageid": 2204744,
+        "size": 203823,
+        "wordcount": 17102,
+        "snippet": "Michelle LaVaughn Robinson <span class=\"searchmatch\">Obama</span> (née Robinson; born January 17, 1964) is an American attorney and author who served as First Lady of the United States",
+        "timestamp": "2026-03-04T09:51:31Z"
+      },
+      {
+        "ns": 0,
+        "title": "Family of Barack Obama",
+        "pageid": 17775180,
+        "size": 128029,
+        "wordcount": 11539,
+        "snippet": "Barack <span class=\"searchmatch\">Obama</span>, the 44th president of the United States, is a prominent American family active in law, education, activism and politics. <span class=\"searchmatch\">Obama&#039;s</span> immediate",
+        "timestamp": "2026-02-04T10:55:41Z"
+      }
+    ]
+  }
+}

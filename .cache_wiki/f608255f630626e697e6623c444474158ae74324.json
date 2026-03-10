@@ -1,0 +1,92 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "-1": {
+        "ns": 6,
+        "title": "File:President Barack Obama.jpg",
+        "missing": "",
+        "known": "",
+        "imagerepository": "shared",
+        "imageinfo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/President_Barack_Obama.jpg",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:President_Barack_Obama.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=23956389",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2013-01-18 13:17:38",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "President Barack Obama",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Executive Office of the President files|Images with extracted images|Featured pictures on Wikipedia, Persian|Featured pictures of people of the United States|United States photographs taken on 2012-12-06|Published consent|Featured photographs in the public domain|Featured historical portrait photographs|Featured pictures on Wikipedia, Arabic|Featured pictures from Flickr|Featured pictures of history of Washington, D.C.|Official portrait of Barack Obama (December 2012)",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "featured|potd",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/President_of_the_United_States\" title=\"President of the United States\">U.S. President</a> <a href=\"//commons.wikimedia.org/wiki/Barack_Obama\" title=\"Barack Obama\">Barack Obama</a>'s official photograph in the <a href=\"https://en.wikipedia.org/wiki/Oval_Office\" class=\"extiw\" title=\"w:Oval Office\">Oval Office</a> on 6 December 2012.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "Taken on 6 December 2012, 15:46:01",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/whitehouse/8390033709/\">P120612PS-0463</a> (<a rel=\"nofollow\" class=\"external text\" href=\"http://farm9.staticflickr.com/8369/8390033709_fd364647a4_o.jpg\">direct link</a>)<br><a rel=\"nofollow\" class=\"external free\" href=\"https://web.archive.org/web/20160227060205/https://www.whitehouse.gov/administration/president-obama\">https://web.archive.org/web/20160227060205/https://www.whitehouse.gov/administration/president-obama</a> (Official White House page - <a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/20160227060914/https://www.whitehouse.gov/sites/whitehouse.gov/files/images/Administration/People/president_official_portrait_hires.jpg\">direct link</a>)",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "Official White House Photo by <a href=\"https://en.wikipedia.org/wiki/Pete_Souza\" class=\"extiw\" title=\"w:Pete Souza\">Pete Souza</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "Public domain",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Public domain",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Copyrighted": {
+                "value": "False",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "pd",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

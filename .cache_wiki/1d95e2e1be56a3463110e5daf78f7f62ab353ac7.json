@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "Q82955": {
+      "type": "item",
+      "id": "Q82955",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "politician"
+        }
+      }
+    },
+    "Q40348": {
+      "type": "item",
+      "id": "Q40348",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "lawyer"
+        }
+      }
+    },
+    "Q15958642": {
+      "type": "item",
+      "id": "Q15958642",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "political writer"
+        }
+      }
+    },
+    "Q28532974": {
+      "type": "item",
+      "id": "Q28532974",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "community organizer"
+        }
+      }
+    },
+    "Q372436": {
+      "type": "item",
+      "id": "Q372436",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "statesperson"
+        }
+      }
+    },
+    "Q185351": {
+      "type": "item",
+      "id": "Q185351",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "jurist"
+        }
+      }
+    },
+    "Q15077007": {
+      "type": "item",
+      "id": "Q15077007",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "podcaster"
+        }
+      }
+    },
+    "Q3400985": {
+      "type": "item",
+      "id": "Q3400985",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "academic"
+        }
+      }
+    },
+    "Q11774156": {
+      "type": "item",
+      "id": "Q11774156",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "memoirist"
+        }
+      }
+    }
+  },
+  "success": 1
+}

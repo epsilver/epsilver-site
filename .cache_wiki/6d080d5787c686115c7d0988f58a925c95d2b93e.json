@@ -1,0 +1,101 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "-1": {
+        "ns": 6,
+        "title": "File:Taylor Swift at the 2023 MTV Video Music Awards (2) (cropped).png",
+        "missing": "",
+        "known": "",
+        "imagerepository": "shared",
+        "imageinfo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%282%29_%28cropped%29.png",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_(2)_(cropped).png",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=144648401",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2024-01-27 16:37:46",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Taylor Swift at the 2023 MTV Video Music Awards (2) (cropped)",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Media from YouTube|Files from external sources with reviewed licenses|2023 MTV Video Music Awards|Extracted images|Taylor Swift in 2023",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Taylor Swift at the <a href=\"https://en.wikipedia.org/wiki/2023_MTV_Video_Music_Awards\" class=\"extiw\" title=\"w:2023 MTV Video Music Awards\">2023 MTV Video Music Awards</a>",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2023-09-13",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<bdi lang=\"en\" dir=\"ltr\"><a href=\"//commons.wikimedia.org/wiki/Commons:YouTube_files\" title=\"Commons:YouTube files\">YouTube</a>: <a rel=\"nofollow\" class=\"external text\" href=\"https://www.youtube.com/watch?v=dgaPo6pGrIc\"><bdi lang=\"\">#taylorswift on the #vmas pink carpet</bdi></a> – View/save archived versions on <a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/*/https://www.youtube.com/watch?v=dgaPo6pGrIc\">archive.org</a> and <a rel=\"nofollow\" class=\"external text\" href=\"https://archive.today/https://www.youtube.com/watch?v=dgaPo6pGrIc\">archive.today</a></bdi><br><a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/20230913171322/https://www.youtube.com/watch?v=dgaPo6pGrIc\">(See specific archived version)</a>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://youtube.com/@iHeartRadioCA\">iHeartRadioCA</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 3.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 3.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Attribution": {
+                "value": "iHeartRadioCA",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/3.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-3.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

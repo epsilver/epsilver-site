@@ -1,0 +1,99 @@
+{
+  "continue": {
+    "iistart": "2022-07-08T16:39:58Z",
+    "continue": "||"
+  },
+  "query": {
+    "pages": {
+      "-1": {
+        "ns": 6,
+        "title": "File:Cr1TiKaL in 2022.jpg",
+        "missing": "",
+        "known": "",
+        "imagerepository": "shared",
+        "imageinfo": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Cr1TiKaL_in_2022.jpg",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Cr1TiKaL_in_2022.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=117495846",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2022-07-08 16:45:15",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Cr1TiKaL in 2022",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Media from YouTube|Retouched pictures|Images of low quality|Cr1TiKaL|Files from external sources with reviewed licenses",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Charles White (Cr1TiKaL) in March 2022.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2022-03-26",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<bdi lang=\"en\" dir=\"ltr\"><a href=\"//commons.wikimedia.org/wiki/Commons:YouTube_files\" title=\"Commons:YouTube files\">YouTube</a>: <a rel=\"nofollow\" class=\"external text\" href=\"https://www.youtube.com/watch?v=F03RfR8jaWI\"><bdi lang=\"\">https://www.youtube.com/watch?v=F03RfR8jaWI</bdi></a> – View/save archived versions on <a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/web/*/https://www.youtube.com/watch?v=F03RfR8jaWI\">archive.org</a> and <a rel=\"nofollow\" class=\"external text\" href=\"https://archive.today/https://www.youtube.com/watch?v=F03RfR8jaWI\">archive.today</a></bdi> (~31:04)",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "Ruxin34",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 3.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 3.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/3.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-3.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
